@@ -1,0 +1,115 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <!--Chama o Create do controller para modal-->
+    <a href="#" class="btn btn-success" data-action="Create">
+        <span class="glyphicon glyphicon-plus"></span>
+        Novo Livro
+    </a>
+</p>
+    <!--Adicionando as tabelas dos livros-->
+    <!--data-order="asc" ordem crescente para ordenação da lista livros na tabela livros -->
+    <!--data-formatter" retorna valores do Formatter bootgrid chamado pelo acoes -->
+    <table id="gridDados">
+        <thead>
+            <tr>
+                <th data-column-id="Titulo" data-order="asc">Título</th>
+                <th data-column-id="Autor">Autor</th>
+                <th data-column-id="AnoEdicao">Ano de Edição</th>
+                <th data-column-id="Valor">Valor</th>
+                <th data-formatter="acoes"></th>
+               
+            </tr>
+        </thead> 
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="minhaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="conteudoModal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @* LINK SCARFOLDING @Html.ActionLink("Create New", "Create")*@
+
+@*Listar ação Listar do PartialView Controller - Html.Action("Listar")*@
+@*
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only">Título</label>
+                <input type="text" class="form-control" name="Titulo" placeholder="Título">
+            </div>
+            <div class="form-group">
+                <label class="sr-only">Autor</label>
+                <input type="text" class="form-control" name="Autor" placeholder="Autor">
+            </div>
+            <div class="form-group">
+                <label class="sr-only">Ano de Edição</label>
+                <input type="text" class="form-control" name="AnoEdicao" placeholder="Ano de Edição">
+            </div>
+            <div class="form-group">
+                <label class="sr-only">Valor</label>
+                <input type="text" class="form-control" name="Valor" placeholder="Valor">
+            </div>
+            <button type="button" id="btnPesquisar" class="btn btn-primary">Pesquisar</button>
+
+            <input type="hidden"name="pagina" value="1"/>
+            <input type="hidden" name="registros" value="5" />
+        </form>
+
+
+    <div id="listagemDeLivros"></div>
+*@
+
+
+
+
+@section scripts{ 
+    <script src="~/Scripts/jquery.bootgrid.js"></script>
+    <script src="~/Scripts/Projeto/ControlarGrid.js"></script>
+    <script type="text/javascript">
+     
+    @*Recurso do Html Help para @Url.Action("Listar")*@
+        var controller = "Livros";
+        var urlListar = "@Url.Action("Listar")";
+
+    @*Carrega a function configurarControles localizada no script ControlarGrid*@
+        $(document).ready(configurarControles);
+
+       
+
+
+
+        @*
+
+            Codigo antigo para listar e paginar
+        $(document).ready(configurarControles);
+
+        function configurarControles() {
+            $("#btnPesquisar").click(listarLivros);
+            listarLivros();
+        }
+
+        function paginar(valor) {
+            var elementoPagina = $("input[name='pagina']");
+            var paginaAtual = parseInt(elementoPagina.val());
+            elementoPagina.val(paginaAtual + valor)
+            listarLivros();
+
+        }
+        function listarLivros() {
+            $("#listagemDeLivros").load("@Url.Action("Listar")",$("form").serialize());
+        }*@
+    </script>
+}
